@@ -10,6 +10,10 @@ jobs:
     runs-on: self-hosted  # Use the self-hosted runner
 
     steps:
+    
+      - name: Change to project directory
+        run: cd ~/actions-runner/_work/fastapi-book-project/fastapi-book-project
+
       - name: Checkout code
         uses: actions/checkout@v4
 
