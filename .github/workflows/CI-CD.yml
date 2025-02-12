@@ -32,7 +32,7 @@ jobs:
 
   deploy:
     name: deploy  # Job must be named exactly "deploy"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: test  # Ensures deployment runs only if tests pass
 
     if: github.ref == 'refs/heads/main'  # Runs only when merged into main
