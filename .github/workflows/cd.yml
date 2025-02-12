@@ -7,20 +7,15 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # Use the self-hosted runner
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to server via SSH
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/fastapi-book-project
-            git pull origin main
-            docker-compose down
-            docker-compose up -d --build
+      - name: Deploy to server
+        run: |
+          cd ~/fastapi-book-project
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
