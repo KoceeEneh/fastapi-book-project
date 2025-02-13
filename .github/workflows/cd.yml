@@ -21,3 +21,19 @@ jobs:
           docker build -t my-fastapi-app .
           docker run -d -p 8000:8000 my-fastapi-app
 
+      - name: SSH into Server and Deploy
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_USER: ${{ secrets.SERVERUSER1 }}
+          SERVER_HOST: ${{ secrets.SERVERHOST1 }}
+          DEPLOY_PATH: "/home/ubuntu/fastapi-book-project"  
+
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key $SERVERUSER1@$SERVERHOST1 << 'EOF'
+            cd $DEPLOY_PATH
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose down
+            docker compose up --build -d
+          EOF
