@@ -16,9 +16,9 @@ jobs:
       - name: SSH into Server and Deploy
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_USER: ${{ secrets.SERVERUSER1 }}
-          SERVER_HOST: ${{ secrets.SERVERHOST1 }}
-          DEPLOY_PATH: "/home/ubuntu/fastapi-book-project"  # Update this with your actual path
+          SERVERUSER1: ${{ secrets.SERVERUSER1 }}
+          SERVERHOST1: ${{ secrets.SERVERHOST1 }}
+          DEPLOY_PATH: "/home/ubuntu/fastapi-book-project"  
 
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
@@ -37,4 +37,5 @@ jobs:
             docker compose down
             docker compose up --build -d
           EOF
+
 
